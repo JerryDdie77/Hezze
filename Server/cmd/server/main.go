@@ -1,7 +1,30 @@
 package main
 
-import "fmt"
+import (
+	"log"
+
+	"github.com/JerryDdie77/Hezze/Server/internal/config"
+	"github.com/JerryDdie77/Hezze/Server/internal/database"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+	cfg, err := config.GetConfig()
+	if err != nil {
+		log.Fatalf("GetConfig: %v", err)
+	}
+
+	dsn := cfg.DSN()
+	
+	db, err := database.NewPostgresDB(dsn)
+	if err != nil {
+		log.Fatalf("NewPostgreDB: %v", err)
+	}
+
+	if err := db.Ping(); err != nil {
+		db.Close()
+		log.Fatalf("Ping: %v", err)
+	}
+
+	
+
 }

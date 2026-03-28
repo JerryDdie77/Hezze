@@ -18,6 +18,18 @@ type Config struct {
 	JWTSecret  string
 }
 
+func (c *Config) DSN() string {
+	return fmt.Sprintf(
+		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
+		c.DBUser,
+		c.DBPassword,
+		c.DBHost,
+		c.DBPort,
+		c.DBName,
+		c.DBSSLMode,
+	)
+}
+
 func GetConfig() (*Config, error) {
 	_ = godotenv.Load()
 
