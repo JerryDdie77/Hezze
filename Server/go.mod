@@ -1,4 +1,4 @@
-module github.com/JerryDdie77/Hezze
+module github.com/JerryDdie77/Hezze/Server
 
 go 1.25.8
 
