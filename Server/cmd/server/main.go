@@ -29,7 +29,7 @@ func main() {
 	h := handler.NewHandler()
 	r := handler.SetupRouter(h)
 	
-	if err := r.Run("8000"); err != nil {
+	if err := r.Run(":8000"); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 
