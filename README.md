@@ -1,3 +1,3 @@
-READY TO GO
-неа, какой го, jsx
-неа, какой jsx, го
+DEV:
+
+docker-compose up -f docker-compose.dev.uml -d
