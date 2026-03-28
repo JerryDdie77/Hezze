@@ -18,10 +18,5 @@ func NewPostgresDB(dsn string) (*sql.DB, error) {
 	db.SetMaxIdleConns(5)
 	db.SetConnMaxLifetime(5 * time.Minute)
 
-	if err := db.Ping(); err != nil {
-		db.Close()
-		return nil, fmt.Errorf("ping: %w", err)
-	}
-
 	return db, nil
 }
