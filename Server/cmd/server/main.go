@@ -5,6 +5,7 @@ import (
 
 	"github.com/JerryDdie77/Hezze/Server/internal/config"
 	"github.com/JerryDdie77/Hezze/Server/internal/database"
+	"github.com/JerryDdie77/Hezze/Server/internal/handler"
 )
 
 func main() {
@@ -23,6 +24,13 @@ func main() {
 	if err := db.Ping(); err != nil {
 		db.Close()
 		log.Fatalf("Ping: %v", err)
+	}
+
+	h := handler.NewHandler()
+	r := handler.SetupRouter(h)
+	
+	if err := r.Run("8000"); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
 	}
 
 	

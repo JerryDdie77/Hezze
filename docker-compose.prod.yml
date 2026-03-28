@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: hezze_postgres
+    env_file:
+      - ./Server/.env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hezze_app
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    container_name: hezze_backend
+    env_file:
+      - ./Server/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - hezze_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./Front
+      dockerfile: Dockerfile
+    container_name: hezze_frontend
+    env_file:
+      - ./Front/.env
+    ports:
+      - "3000:3000"
+    networks:
+      - hezze_app
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  hezze_app:
+    driver: bridge
+
+volumes:
+  postgres_data:
