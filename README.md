@@ -1,3 +1,3 @@
 DEV:
 
-docker-compose up -f docker-compose.dev.uml -d
+docker-compose -f docker-compose.dev.yml up -d
