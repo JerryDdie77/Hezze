@@ -2,12 +2,10 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: hezze_postgres_dev
-    env_file:
-      - ./Server/.env
     environment:
-      POSTGRES_USER: Backend
-      POSTGRES_PASSWORD: SuperStrongBackendPassword
-      POSTGRES_DB: hezze_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -15,7 +13,7 @@ services:
     networks:
       - hezze_app_dev
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U Backend -d hezze_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,7 +25,7 @@ services:
       dockerfile: Dockerfile
     container_name: hezze_backend_dev
     env_file:
-      - ./Server/.env
+      - .env
     ports:
       - "8000:8000"
     networks:
@@ -60,7 +58,8 @@ services:
       - /app/node_modules     
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true     
+      - WATCHPACK_POLLING=true
+      - VITE_API_URL=${VITE_API_URL}
     stdin_open: true
     tty: true
     restart: unless-stopped
