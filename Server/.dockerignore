@@ -1,0 +1,56 @@
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Dependencies
+vendor/
+
+# Binaries
+server
+backend
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Build outputs
+*.out
+*.o
+*.a
+
+# Logs
+*.log
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Go workspace
+go.work
+go.work.sum
+
+# Tests
+*_test.go
+*.test
+
+# Temp files
+tmp/
+temp/
+*.tmp
