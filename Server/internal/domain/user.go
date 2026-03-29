@@ -17,5 +17,4 @@ type UserResponse struct {
 	FirstName string `json:"first_name"`
 	Surname   string `json:"surname"`
 	Email     string `json:"email"`
-	Phone     string `json:"phone"`
 }
