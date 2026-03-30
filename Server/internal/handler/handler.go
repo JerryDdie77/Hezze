@@ -1,14 +1,16 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/JerryDdie77/Hezze/Server/internal/service"
+	"github.com/gin-gonic/gin"
+)
 
 type Handler struct {
-	// there will be services soon...
+	userService service.UserService
 }
 
-func NewHandler() *Handler {
-	// there will be services soon...
-	return &Handler{}
+func NewHandler(userService service.UserService) *Handler {
+	return &Handler{userService: userService}
 }
 
 func Ping(c *gin.Context) {
