@@ -13,6 +13,10 @@ type UserService struct {
 	repo repository.UserRepository
 }
 
+func NewUserService(repo repository.UserRepository) UserService {
+	return UserService{repo: repo}
+}
+
 func (u *UserService) GetUser(ctx context.Context, id int) (*domain.UserResponse, error) {
 	user, err := u.repo.GetUserByID(ctx, id)
 	if err != nil {
@@ -29,11 +33,11 @@ func (u *UserService) GetUser(ctx context.Context, id int) (*domain.UserResponse
 	}
 
 	return &domain.UserResponse{
-		ID: user.ID,
-		UserName: user.UserName,
+		ID:        user.ID,
+		UserName:  user.UserName,
 		FirstName: user.FirstName,
-		Surname: user.Surname,
-		Email: user.Email,
+		Surname:   user.Surname,
+		Email:     user.Email,
 	}, nil
 
 }

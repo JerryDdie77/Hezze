@@ -17,7 +17,11 @@ type PostgresUserRepository struct {
 	db *sql.DB
 }
 
-func (p *PostgresUserRepository) GetByID(ctx context.Context, id int) (*domain.User, error) {
+func NewPostgresUserRepository(db *sql.DB) PostgresUserRepository {
+	return PostgresUserRepository{db: db}
+}
+
+func (p PostgresUserRepository) GetUserByID(ctx context.Context, id int) (*domain.User, error) {
 	query := "SELECT id, user_name, first_name, surname, password_hash, email, phone, is_blocked FROM users WHERE id = $1"
 
 	var u domain.User
