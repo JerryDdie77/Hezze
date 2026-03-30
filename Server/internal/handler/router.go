@@ -3,8 +3,12 @@ package handler
 import "github.com/gin-gonic/gin"
 
 func SetupRouter(h *Handler) *gin.Engine {
-	router := gin.Default()
-	router.GET("/health", Ping)
-	
-	return router
+	r := gin.Default()
+	r.GET("/health", Ping)
+
+	api:= r.Group("/api")
+	{
+		api.GET("/users/:id")
+	}
+	return r
 }

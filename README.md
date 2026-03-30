@@ -27,7 +27,7 @@ docker compose -f docker-compose.dev.yml up -d
 docker-compose -f docker-compose.dev.yml up -d --build
 
 #Linux
-docker compose -f docker.compose.dev.yml up -d --build
+docker compose -f docker-compose.dev.yml up -d --build
 ```
 
 # Полная очистка проекта
